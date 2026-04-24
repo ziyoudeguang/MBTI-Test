@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MBTI情感相处指南 | 16型人格恋爱风格与最佳配对</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7ff 0%, #ffffff 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* 顶部导航 */
+        .top-bar {
+            background: white;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        .nav-links a.active {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 4px;
+        }
+
+        /* 主内容区 */
+        .main-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+        }
+        .page-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 分类标题 */
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 48px 0 24px 0;
+            padding-bottom: 12px;
+            border-bottom: 3px solid;
+            display: inline-block;
+        }
+        .category-title.nt { color: #4facfe; border-bottom-color: #4facfe; }
+        .category-title.nf { color: #f093fb; border-bottom-color: #f093fb; }
+        .category-title.sj { color: #2d8f6e; border-bottom-color: #2d8f6e; }
+        .category-title.sp { color: #f5a623; border-bottom-color: #f5a623; }
+
+        /* 人格卡片网格 */
+        .personality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .personality-card-detail {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid #eee;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .personality-card-detail:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(102,126,234,0.1);
+        }
+        .personality-card-detail h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .personality-card-detail .subtitle {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 16px;
+        }
+        .personality-card-detail .section {
+            margin-top: 16px;
+        }
+        .personality-card-detail .section strong {
+            color: #667eea;
+        }
+        .personality-card-detail .section p {
+            color: #555;
+            line-height: 1.6;
+            margin-top: 4px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 32px;
+            color: #999;
+            font-size: 0.8rem;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .personality-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            .category-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🧠 MBTI 人格测试</a>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="dimensions.html">四维详解</a>
+                <a href="encyclopedia.html">人格百科</a>
+                <a href="relationship.html" class="active">情感相处</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1>💞 MBTI情感相处指南</h1>
+            <p>16型人格的恋爱风格与最佳配对，读懂自己和伴侣，让爱更顺畅</p>
+        </div>
+
+        <!-- 分析师型 NT -->
+        <h2 id="analysts" class="category-title nt">🧠 分析师型 — 理性的爱</h2>
+        <div class="personality-grid">
+            <div class="personality-card-detail">
+                <h3>INTJ <span style="font-size: 0.9rem;">建筑师</span></h3>
+                <div class="subtitle">战略家 · 深思熟虑</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>INTJ恋爱慎重而深情——不轻易开始，一旦投入就极为忠诚。他们用行动而非甜言蜜语表达爱意，喜欢与伴侣共同规划未来，需要大量独处空间。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>ENFP / ENTP</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>被尊重的独立空间、智识上的共鸣、伴侣的自我成长</p></div>
+            </div>
+            <div class="personality-card-detail">
+                <h3>INTP <span style="font-size: 0.9rem;">逻辑学家</span></h3>
+                <div class="subtitle">思考者 · 理性分析</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>INTP在恋爱中显得别扭——内心深情却不擅表达，更愿意用逻辑分析感情。他们珍视关系中的智识探索，需要伴侣给予充足自由。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>ENFJ / ENTJ</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>充分的个人空间、思想上的碰撞、不被催促改变</p></div>
+            </div>
+            <div class="personality-card-detail">
+                <h3>ENTJ <span style="font-size: 0.9rem;">指挥官</span></h3>
+                <div class="subtitle">领导者 · 目标导向</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>ENTJ在爱情中同样主导果断——目标明确、规划清晰。他们会为关系倾注大量资源，但也容易忽视伴侣的情感细节。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>INFP / INTP</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>被尊重的权威感、伴侣的成长野心、共同的未来愿景</p></div>
+            </div>
+            <div class="personality-card-detail">
+                <h3>ENTP <span style="font-size: 0.9rem;">辩论家</span></h3>
+                <div class="subtitle">创新者 · 思维活跃</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>ENTP恋爱充满活力和创意，喜欢用玩笑和辩论表达喜欢。他们需要能与之"智识角斗"的伴侣，但也容易因寻求刺激而感到无聊。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>INFJ / INTJ</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>持续的新鲜感、思想激荡、被挑战而非顺从</p></div>
+            </div>
+        </div>
+
+        <!-- 外交家型 NF -->
+        <h2 id="diplomats" class="category-title nf">🌱 外交家型 — 深情的爱</h2>
+        <div class="personality-grid">
+            <div class="personality-card-detail">
+                <h3>INFJ <span style="font-size: 0.9rem;">提倡者</span></h3>
+                <div class="subtitle">理想主义者 · 灵魂连接</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>INFJ对感情极为认真，追求灵魂层面的深度连接，绝不将就。他们善于感知伴侣的情绪需求，但也容易因过度付出而耗竭。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>ENTP / ENFP</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>深度的情感联结、被伴侣真正"看见"、价值观的契合</p></div>
+            </div>
+            <div class="personality-card-detail">
+                <h3>INFP <span style="font-size: 0.9rem;">调停者</span></h3>
+                <div class="subtitle">浪漫主义 · 理想之爱</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>INFP是理想主义的浪漫者，追求灵魂伴侣般的深刻感情。他们内心爱得炙热，但表达含蓄，需要伴侣主动靠近。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>ENFJ / ENTJ</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>被完全接纳的安全感、真实的情感交流、创意与梦想的空间</p></div>
+            </div>
+            <div class="personality-card-detail">
+                <h3>ENFJ <span style="font-size: 0.9rem;">主人公</span></h3>
+                <div class="subtitle">关系经营者 · 温暖付出</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>ENFJ是天生的关系经营者，温暖、细腻、善于给予。他们全心投入感情，但也容易忽视自身需求。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>INFP / ISFP</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>被感激和珍视、共同成长的方向、情感上的对等回应</p></div>
+            </div>
+            <div class="personality-card-detail">
+                <h3>ENFP <span style="font-size: 0.9rem;">竞选者</span></h3>
+                <div class="subtitle">热情奔放 · 真诚坦率</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>ENFP热情奔放、充满创意，恋爱时会把伴侣捧上天。他们极为重视情感真诚，但也容易在热情消退后产生动摇。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>INTJ / INFJ</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>情感自由与探索、被伴侣深度理解、共同的价值观探索</p></div>
+            </div>
+        </div>
+
+        <!-- 守护者型 SJ -->
+        <h2 id="guardians" class="category-title sj">⚙️ 守护者型 — 稳定的爱</h2>
+        <div class="personality-grid">
+            <div class="personality-card-detail">
+                <h3>ISTJ <span style="font-size: 0.9rem;">物流师</span></h3>
+                <div class="subtitle">可靠伴侣 · 务实忠诚</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>ISTJ是最可靠的伴侣——言出必行、忠诚稳重。他们不善于浪漫表达，但会用实际行动守护关系。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>ESFJ / ESTJ</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>被认可和感激、稳定的生活规划、清晰的期望和边界</p></div>
+            </div>
+            <div class="personality-card-detail">
+                <h3>ISFJ <span style="font-size: 0.9rem;">守护者</span></h3>
+                <div class="subtitle">默默付出 · 细腻体贴</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>ISFJ用行动表达爱，默默照顾伴侣的一切需求。他们忠诚可靠，但容易过度付出而忽略自己。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>ESTP / ESFP</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>被感激和珍视、情感上的安全感、伴侣的回应与认可</p></div>
+            </div>
+            <div class="personality-card-detail">
+                <h3>ESTJ <span style="font-size: 0.9rem;">总经理</span></h3>
+                <div class="subtitle">务实负责 · 行动派</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>ESTJ用行动证明爱，会为关系建立清晰的规则和目标。他们可靠负责，但需要学习情感表达。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>ISTJ / ISFJ</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>被尊重和认可、伴侣的忠诚与责任、清晰的共同目标</p></div>
+            </div>
+            <div class="personality-card-detail">
+                <h3>ESFJ <span style="font-size: 0.9rem;">执政官</span></h3>
+                <div class="subtitle">热心体贴 · 社交达人</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>ESFJ用热情和关怀表达爱，重视传统和家庭价值。他们需要伴侣的积极回应和认可。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>ISTP / INTP</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>被需要和珍视、情感上的回应、和谐的家庭氛围</p></div>
+            </div>
+        </div>
+
+        <!-- 探险家型 SP -->
+        <h2 id="explorers" class="category-title sp">💎 探险家型 — 自由的愛</h2>
+        <div class="personality-grid">
+            <div class="personality-card-detail">
+                <h3>ISTP <span style="font-size: 0.9rem;">鉴赏家</span></h3>
+                <div class="subtitle">独立自主 · 活在当下</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>ISTP用行动而非言语表达爱，重视独立和自由。他们冷静务实，需要伴侣理解他们的沉默。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>ESFJ / ESTJ</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>充分的个人空间、实际行动的关怀、不被束缚的自由</p></div>
+            </div>
+            <div class="personality-card-detail">
+                <h3>ISFP <span style="font-size: 0.9rem;">探险家</span></h3>
+                <div class="subtitle">温柔浪漫 · 艺术气质</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>ISFP用温柔和浪漫表达爱，追求当下的美好体验。他们敏感细腻，需要伴侣的耐心和理解。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>ENFJ / ESFJ</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>被理解和接纳、浪漫的情感体验、不受压力的自由</p></div>
+            </div>
+            <div class="personality-card-detail">
+                <h3>ESTP <span style="font-size: 0.9rem;">企业家</span></h3>
+                <div class="subtitle">热情奔放 · 冒险精神</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>ESTP用热情和行动表达爱，追求刺激和新鲜体验。他们魅力十足，但需要学会长期承诺。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>ISTJ / ISFJ</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>刺激和新鲜感、被欣赏和认可、不受束缚的自由</p></div>
+            </div>
+            <div class="personality-card-detail">
+                <h3>ESFP <span style="font-size: 0.9rem;">表演者</span></h3>
+                <div class="subtitle">热情洋溢 · 活在当下</div>
+                <div class="section"><strong>💘 恋爱风格：</strong><p>ESFP用热情和浪漫表达爱，享受当下的快乐时光。他们需要伴侣的陪伴和关注。</p></div>
+                <div class="section"><strong>✨ 最佳配对：</strong><p>ISTJ / ISFJ</p></div>
+                <div class="section"><strong>💖 情感需求：</strong><p>被关注和欣赏、快乐的共同体验、情感上的直接回应</p></div>
+            </div>
+        </div>
+
+        <div style="background: #f0f4ff; border-radius: 28px; padding: 32px; margin-top: 40px; text-align: center;">
+            <h3 style="margin-bottom: 12px;">🧩 如何用MBTI改善情感关系？</h3>
+            <p style="color: #555; line-height: 1.7; margin-bottom: 16px;">MBTI不是为了给人贴标签，而是提供理解彼此的框架。了解自己和伴侣的性格类型，可以更好地沟通、减少误解、满足彼此的情感需求。<br>记住：任何两种类型都可以建立健康的关系，关键在于相互理解和尊重。</p>
+            <a href="index.html" style="display: inline-block; margin-top: 8px; padding: 12px 28px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; text-decoration: none; border-radius: 40px; font-weight: 500;">→ 返回首页开始测试</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p style="margin-top: 12px; font-size: 0.75rem; color: #aaa;">本情感指南仅供参考</p>
+        <p>基于迈尔斯-布里格斯类型指标 (MBTI) | 情感相处指南</p>
+        <p style="margin-top: 8px;">MBTI 测量的是偏好倾向，不是能力高低，没有好坏之分。任何类型都可以建立健康的关系。</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人格百科 | MBTI 十六型人格详解</title>
+    <style>
+        /* 确保百科页面独立样式与 relationship.html 导航栏一致 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7ff 0%, #ffffff 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* 顶部导航（完全复制 relationship.html） */
+        .top-bar {
+            background: white;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        .nav-links a.active {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 4px;
+        }
+
+        /* 百科页面其余样式 */
+        .encyclopedia-page {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 24px 80px;
+            background: linear-gradient(135deg, #f5f7ff 0%, #ffffff 100%);
+            min-height: 100vh;
+        }
+        .encyclopedia-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .encyclopedia-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+        }
+        .encyclopedia-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* 分类选项卡（只有四个） */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+        .cat-btn {
+            padding: 10px 24px;
+            border-radius: 40px;
+            background: #f0f0f0;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            border: none;
+            font-size: 0.95rem;
+        }
+        .cat-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102,126,234,0.3);
+        }
+        /* 卡片网格 */
+        .personality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+        .personality-card {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        .personality-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(102,126,234,0.15);
+            border-color: #667eea40;
+        }
+        .personality-card-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 16px;
+            border: 3px solid #f0f0f0;
+        }
+        .personality-card-type {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #333;
+            letter-spacing: 2px;
+        }
+        .personality-card-name {
+            font-size: 1rem;
+            color: #667eea;
+            font-weight: 500;
+            margin: 8px 0;
+        }
+        .personality-card-desc {
+            font-size: 0.85rem;
+            color: #777;
+            line-height: 1.5;
+        }
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            border-radius: 32px;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-close {
+            position: sticky;
+            top: 16px;
+            right: 24px;
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+            background: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 16px 24px 0 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .modal-body {
+            padding: 24px 32px 40px;
+            clear: both;
+        }
+        .modal-type {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .modal-name {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 24px;
+        }
+        .modal-img {
+            display: block;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 24px;
+            border: 3px solid #667eea;
+        }
+        .modal-section {
+            margin-bottom: 24px;
+        }
+        .modal-section h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            padding-left: 12px;
+            border-left: 4px solid #667eea;
+        }
+        .modal-section p {
+            color: #555;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航（与 relationship.html 完全一致） -->
+    <div class="top-bar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🧠 MBTI 人格测试</a>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="dimensions.html">四维详解</a>
+                <a href="encyclopedia.html" class="active">人格百科</a>
+                <a href="relationship.html">情感相处</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="encyclopedia-page">
+        <div class="encyclopedia-header">
+            <h1>📖 人格百科</h1>
+            <p>基于荣格心理学理论，深入探索十六种人格原型的精神世界</p>
+        </div>
+
+        <!-- 分类选项卡（只有四个） -->
+        <div class="category-tabs" id="categoryTabs">
+            <button class="cat-btn active" data-cat="nt">🧠 分析师 NT</button>
+            <button class="cat-btn" data-cat="nf">🌱 外交家 NF</button>
+            <button class="cat-btn" data-cat="sj">⚙️ 守护者 SJ</button>
+            <button class="cat-btn" data-cat="sp">💎 探险家 SP</button>
+        </div>
+
+        <!-- 卡片网格 -->
+        <div class="personality-grid" id="personalityGrid"></div>
+    </div>
+
+    <!-- 详情弹窗 -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal()">&times;</div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // 完整人格数据（与首页保持一致）
+        const personalityData = {
+            // 分析师 NT
+            INTJ: { name: "建筑师", category: "nt", shortDesc: "富有想象力和战略性的思考者，一切皆在计划之中。", img: "image/INTJ-typies.jpg", detailedDesc: "INTJ（建筑师）是富有想象力和战略性的思想家，一切皆在计划之中。他们具有独特的洞察力，能够看到复杂系统中的模式和可能性。INTJ通常自信、理性、独立思考，喜欢长远规划并坚定不移地执行。他们追求知识和能力上的精通，对平庸和低效缺乏耐心。在社交中可能显得冷淡，但对少数亲近的人非常忠诚。他们天生是领导者，善于制定创新解决方案。", traits: "理性、独立、战略思维、追求完美、长远规划", careers: "科学家、工程师、策略顾问、数据分析师、企业家" },
+            INTP: { name: "逻辑学家", category: "nt", shortDesc: "富有创造力的思考者，对知识有着无尽的渴求。", img: "image/INTP-typies.jpg", detailedDesc: "INTP（逻辑学家）是富有创造力的思考者，对知识有着无尽的渴求。他们喜欢分析复杂问题，构建理论模型，并寻找逻辑上完美的解决方案。INTP通常安静、内向、好奇，有时会沉浸在自己的思想中。他们重视逻辑一致性，擅长发现他人论证中的漏洞。在社交场合可能显得疏离，但一旦找到志同道合的人，会进行深入的智力交流。", traits: "好奇、逻辑性强、创新思维、独立思考、分析能力", careers: "哲学家、数学家、软件架构师、科研人员、系统分析师" },
+            ENTJ: { name: "指挥官", category: "nt", shortDesc: "天生的领导者，具有远见和执行力。", img: "image/ENTJ-typies.jpg", detailedDesc: "ENTJ（指挥官）是天生的领导者，具有远见和执行力。他们善于发现系统和流程中的低效，并果断地进行改进。ENTJ自信、理性、直言不讳，喜欢掌控局面并推动团队达成目标。他们重视能力和结果，对情感因素不太敏感。在压力下表现冷静，擅长长期战略规划。他们能够激励他人，但也可能因为强势而让人感到压迫。", traits: "果断、战略思维、领导力、高效、自信", careers: "高管、企业家、项目经理、律师、金融分析师" },
+            ENTP: { name: "辩论家", category: "nt", shortDesc: "聪明好奇的创新者，喜欢挑战常规。", img: "image/ENTP-typies.jpg", detailedDesc: "ENTP（辩论家）是聪明好奇的创新者，喜欢挑战常规和探索新想法。他们擅长头脑风暴，能快速看出不同概念之间的联系。ENTP机智、幽默、喜欢辩论，享受智力上的交锋。他们适应性强，讨厌重复和单调，总是在寻找新的可能性。有时会因兴趣过于分散而难以坚持完成一件事。他们是出色的企业家和创意策划者。", traits: "创新、机智、辩论精神、适应力强、好奇心", careers: "创意总监、市场营销、产品经理、律师、发明家" },
+            // 外交家 NF
+            INFJ: { name: "提倡者", category: "nf", shortDesc: "安静而神秘的理想主义者，致力于让世界更美好。", img: "image/INFJ-typies.jpg", detailedDesc: "INFJ（提倡者）是安静而神秘的理想主义者，具有深刻的洞察力和强烈的道德感。他们关注人类的福祉，致力于让世界变得更美好。INFJ善于理解他人的情感和动机，能够给予深刻的建议和支持。他们重视深度关系，但对多数人保持距离。他们富有创造力，常通过艺术或写作表达内心世界。他们坚定地追求自己的价值观，并愿意为之付出一切。", traits: "理想主义、洞察力、同理心、创造力、坚持原则", careers: "心理咨询师、作家、社会工作者、非营利组织、教师" },
+            INFP: { name: "调停者", category: "nf", shortDesc: "诗意而善良的利他主义者，总是关注事物好的一面。", img: "image/INFP-typies.jpg", detailedDesc: "INFP（调停者）是诗意而善良的利他主义者，总是关注事物好的一面。他们重视内在和谐与真实性，追求与自己价值观一致的生活。INFP富有想象力，喜欢写作、音乐等艺术表达。他们对他人的感受非常敏感，乐于帮助需要帮助的人。他们不喜欢冲突，会尽力维护和平。有时会因为过于理想化而感到失望，但总能从内心找到希望。", traits: "理想主义、敏感、创造力、忠诚、适应性", careers: "艺术家、作家、心理咨询师、教师、非营利组织" },
+            ENFJ: { name: "主人公", category: "nf", shortDesc: "富有魅力和鼓舞人心的领导者，善于理解并激励他人。", img: "image/ENFJ-typies.jpg", detailedDesc: "ENFJ（主人公）是富有魅力和鼓舞人心的领导者，天生善于理解并激励他人。他们关注他人的成长和发展，善于营造积极的团队氛围。ENFJ热情、健谈、有组织能力，能够看到每个人的潜力并帮助他们实现。他们重视和谐与合作，但也会为了原则而坚定立场。他们在社交中如鱼得水，但有时会忽略自己的需求。他们是优秀的教师、顾问和领导者。", traits: "热情、同理心、领导力、沟通能力、组织力", careers: "教师、公关、人力资源、咨询顾问、社会活动家" },
+            ENFP: { name: "竞选者", category: "nf", shortDesc: "热情、有创造力、爱社交的自由精神者。", img: "image/ENFP-typies.jpg", detailedDesc: "ENFP（竞选者）是热情、有创造力、爱社交的自由精神者。他们对生活充满好奇，总是寻找新的可能性和体验。ENFP善于发现人和事物之间的潜在联系，并能用感染力激励他人。他们情感丰富，重视真实和真诚。他们喜欢自由，讨厌被束缚，有时会因兴趣太多而难以专注。他们是优秀的沟通者、创意工作者和激励者。", traits: "热情、创造力、社交能力、适应力、乐观", careers: "广告文案、活动策划、心理咨询师、演员、创业者" },
+            // 守护者 SJ
+            ISTJ: { name: "物流师", category: "sj", shortDesc: "正直、务实、逻辑性强，做事有条不紊。", img: "image/ISTJ-typies.jpg", detailedDesc: "ISTJ（检查员）是正直、务实、逻辑性强的人，做事有条不紊。他们重视事实和传统，喜欢按照规则和程序办事。ISTJ有很强的责任感和执行力，会认真完成承诺的任务。他们不喜欢变化和意外，倾向于稳定和可预测的环境。他们沉默寡言，但对亲近的人非常忠诚可靠。他们是出色的管理者、会计师和工程师。", traits: "务实、责任感、逻辑性强、可靠、传统", careers: "会计师、审计师、工程师、数据分析师、项目经理" },
+            ISFJ: { name: "守护者", category: "sj", shortDesc: "专注而温暖的守护者，默默关心身边的人。", img: "image/ISFJ-typies.jpg", detailedDesc: "ISFJ（守护者）是专注而温暖的守护者，默默关心身边的人。他们非常有责任感，会记住别人的喜好和重要日期。ISFJ重视传统和和谐，喜欢在背后支持他人。他们谦虚、勤劳，不追求个人荣耀。他们需要被认可和感激，但往往不会主动表达需求。他们是优秀的护士、图书管理员和行政助理。", traits: "细心、责任感、忠诚、耐心、支持性", careers: "护士、图书管理员、行政助理、教师、社会工作者" },
+            ESTJ: { name: "总经理", category: "sj", shortDesc: "执行力强、善于监督的人，重视传统和规则。", img: "image/ESTJ-typies.jpg", detailedDesc: "ESTJ（管理者）是执行力强、善于监督的人，重视传统和规则。他们喜欢建立秩序，确保事情高效运行。ESTJ果断、直接、务实，对低效和无能没有耐心。他们重视忠诚和努力，期望他人也遵守同样的标准。他们是天生的管理者，擅长组织和分配任务。他们可能显得严厉，但内心关心团队的成功。", traits: "果断、高效、组织力、责任感、务实", careers: "项目经理、运营总监、法官、警察、企业管理者" },
+            ESFJ: { name: "执政官", category: "sj", shortDesc: "热心、健谈、受欢迎，总是乐于助人。", img: "image/ESFJ-typies.jpg", detailedDesc: "ESFJ（执政官）是热心、健谈、受欢迎的人，总是乐于助人。他们非常重视人际关系和和谐，喜欢组织社交活动。ESFJ务实、关注细节，会努力满足他人的需求。他们需要得到认可和赞赏，害怕被排斥。他们忠诚、可靠，是出色的朋友和同事。他们适合从事客户服务、教育、医疗等需要大量人际互动的工作。", traits: "热情、乐于助人、组织力、社交能力、责任感", careers: "客户服务、销售、护士、教师、活动策划" },
+            // 探险家 SP
+            ISTP: { name: "鉴赏家", category: "sp", shortDesc: "大胆而实际，善于动手解决问题。", img: "image/ISTP-typies.jpg", detailedDesc: "ISTP（鉴赏家）是大胆而实际的人，善于动手解决问题。他们喜欢探索事物的工作原理，擅长使用工具和机械。ISTP冷静、独立、灵活，能够在压力下保持镇定。他们喜欢冒险和刺激，经常参与体育或户外活动。他们不擅长表达情感，但会用行动帮助他人。他们是优秀的工程师、飞行员、运动员。", traits: "务实、动手能力、冷静、适应力、独立", careers: "工程师、飞行员、运动员、机械师、侦探" },
+            ISFP: { name: "探险家", category: "sp", shortDesc: "灵活有魅力，时刻准备探索新体验。", img: "image/ISFP-typies.jpg", detailedDesc: "ISFP（探险家）是灵活有魅力的人，时刻准备探索新体验。他们重视审美和感官享受，喜欢艺术、音乐和大自然。ISFP温和、敏感、随和，不喜欢冲突和压力。他们活在当下，追求真实和自由。他们不善于计划未来，更喜欢顺其自然。他们是优秀的艺术家、设计师、兽医和护士。", traits: "敏感、艺术气质、灵活、随和、观察力", careers: "艺术家、设计师、兽医、护士、音乐家" },
+            ESTP: { name: "企业家", category: "sp", shortDesc: "聪明、精力充沛，善于把握机会。", img: "image/ESTP-typies.jpg", detailedDesc: "ESTP（企业家）是聪明、精力充沛、善于把握机会的人。他们喜欢行动和冒险，能够快速适应变化。ESTP现实、务实，擅长谈判和说服。他们喜欢成为注意力的焦点，享受刺激和竞争。他们有时会忽略长远后果，但总能找到即兴的解决方案。他们是出色的销售员、企业家、运动员。", traits: "精力充沛、务实、冒险精神、谈判能力、适应力", careers: "销售、企业家、运动员、市场专员、公关" },
+            ESFP: { name: "表演者", category: "sp", shortDesc: "自发性强、精力充沛且热情，热爱生活。", img: "image/ESFP-typies.jpg", detailedDesc: "ESFP（表演者）是自发性强、精力充沛且热情的人，热爱生活。他们喜欢社交、娱乐和新鲜体验，总能给周围带来快乐。ESFP务实、友善、灵活，善于与人相处。他们重视当下的感受，讨厌无聊和约束。他们需要被关注和赞赏，是天生的表演者。他们是优秀的演员、主持人、活动策划者。", traits: "热情、社交能力、即兴发挥、乐观、感染力", careers: "演员、主持人、活动策划、销售、公关" }
+        };
+
+        function getImagePath(type) {
+            return `image/${type}-typies.jpg`;
+        }
+
+        function renderGrid(category) {
+            const grid = document.getElementById('personalityGrid');
+            grid.innerHTML = '';
+            for (let [type, data] of Object.entries(personalityData)) {
+                if (data.category !== category) continue;
+                const card = document.createElement('div');
+                card.className = 'personality-card';
+                card.onclick = () => showDetail(type);
+                card.innerHTML = `
+                    <img class="personality-card-img" src="${getImagePath(type)}" alt="${type}" onerror="this.src='image/placeholder.jpg'">
+                    <div class="personality-card-type">${type}</div>
+                    <div class="personality-card-name">${data.name}</div>
+                    <div class="personality-card-desc">${data.shortDesc}</div>
+                `;
+                grid.appendChild(card);
+            }
+        }
+
+        function showDetail(type) {
+            const data = personalityData[type];
+            if (!data) return;
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="modal-type">${type}</div>
+                <div class="modal-name">${data.name}</div>
+                <img class="modal-img" src="${getImagePath(type)}" alt="${type}" onerror="this.src='image/placeholder.jpg'">
+                <div class="modal-section"><h3>📝 详细介绍</h3><p>${data.detailedDesc}</p></div>
+                <div class="modal-section"><h3>⭐ 核心特质</h3><p>${data.traits}</p></div>
+                <div class="modal-section"><h3>💼 适合领域</h3><p>${data.careers}</p></div>
+            `;
+            document.getElementById('detailModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+
+        function initCategoryTabs() {
+            const tabs = document.querySelectorAll('.cat-btn');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const category = tab.getAttribute('data-cat');
+                    renderGrid(category);
+                });
+            });
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('detailModal');
+            if (event.target === modal) closeModal();
+        };
+
+        // 默认显示分析师 NT
+        renderGrid('nt');
+        initCategoryTabs();
+    </script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MBTI人格测试 | 迈尔斯-布里格斯类型指标</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .app-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 48px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            overflow: hidden;
+        }
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .page-content { padding: 48px 40px; }
+        @media (max-width: 640px) { .page-content { padding: 32px 24px; } }
+        .main-title { font-size: 2.5rem; font-weight: 700; text-align: center; color: #1a1a2e; margin-bottom: 12px; }
+        @media (max-width: 640px) { .main-title { font-size: 1.8rem; } }
+        .sub-info { text-align: center; color: #666; font-size: 0.95rem; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+        .description-card { background: #f8f9ff; border-radius: 24px; padding: 28px; margin: 24px 0; color: #444; line-height: 1.7; border-left: 4px solid #667eea; }
+        .btn {
+            display: inline-block; padding: 14px 32px; font-size: 1rem; font-weight: 600;
+            border-radius: 40px; cursor: pointer; transition: all 0.2s; border: none; font-family: inherit;
+        }
+        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; box-shadow: 0 4px 14px rgba(102,126,234,0.4); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.5); }
+        .btn-secondary { background: #f0f0f0; color: #333; }
+        .btn-secondary:hover { background: #e0e0e0; }
+        .btn-outline { background: transparent; border: 2px solid #ddd; color: #666; }
+        .btn-outline:hover { border-color: #667eea; color: #667eea; }
+        .button-group { display: flex; gap: 16px; justify-content: center; margin-top: 32px; flex-wrap: wrap; }
+        .notice-box { background: #fff9e6; border-radius: 24px; padding: 28px; margin: 24px 0; }
+        .notice-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 20px; color: #333; }
+        .notice-list { list-style: none; padding: 0; }
+        .notice-list li { padding: 10px 0; padding-left: 28px; position: relative; line-height: 1.6; color: #555; }
+        .notice-list li:before { content: "✓"; position: absolute; left: 0; color: #667eea; font-weight: bold; }
+        .progress-area { margin-bottom: 32px; }
+        .progress-text { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.85rem; color: #666; }
+        .progress-bar-bg { background: #e0e0e0; border-radius: 20px; height: 8px; overflow: hidden; }
+        .progress-bar-fill { background: linear-gradient(90deg, #667eea, #764ba2); width: 0%; height: 100%; border-radius: 20px; transition: width 0.3s; }
+        .question-text { font-size: 1.5rem; font-weight: 600; color: #1a1a2e; line-height: 1.4; margin-bottom: 32px; }
+        @media (max-width: 640px) { .question-text { font-size: 1.2rem; } }
+        .options { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+        .option-btn {
+            padding: 18px 24px; background: #f5f5f5; border-radius: 60px; border: 2px solid transparent;
+            cursor: pointer; font-size: 1rem; font-weight: 500; transition: all 0.2s; text-align: left; font-family: inherit;
+        }
+        .option-btn:hover { background: #eee; transform: translateX(4px); }
+        .option-btn.selected { background: #667eea10; border-color: #667eea; color: #667eea; }
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+        .result-card { background: linear-gradient(135deg, #667eea15, #764ba215); border-radius: 32px; padding: 32px; text-align: center; }
+        .result-type { font-size: 2.5rem; font-weight: 800; color: #667eea; margin: 16px 0; }
+        .result-image { width: 100%; max-width: 300px; margin: 20px auto; border-radius: 24px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+        .result-desc { color: #555; line-height: 1.8; margin: 20px 0; }
+        .btn-restart { margin-top: 20px; }
+        .footer { background: #f8f9ff; padding: 16px 40px; text-align: center; font-size: 0.75rem; color: #999; border-top: 1px solid #eee; }
+    </style>
+</head>
+<body>
+<div class="app-container" id="app">
+    <!-- 首页 -->
+    <div id="homePage" class="page active">
+        <div class="page-content">
+            <h1 class="main-title">MBTI人格测试</h1>
+            <div class="sub-info">共93道题，预计需要20分钟</div>
+            <div class="description-card">
+                <p>迈尔斯-布里格斯类型指标是由美国作家伊莎贝尔·布里格斯·迈尔斯和她的母亲凯瑟琳·库克·布里格斯共同制定的一种人格类型理论模型，此后就诞生了MBTI测试。</p>
+            </div>
+            <div style="text-align: center;"><button class="btn btn-primary" id="startBtn">开始测试</button></div>
+        </div>
+        <div class="footer"><p>基于迈尔斯-布里格斯类型指标 | 93题标准版</p></div>
+    </div>
+
+    <!-- 测试须知页 -->
+    <div id="noticePage" class="page">
+        <div class="page-content">
+            <h1 class="main-title" style="font-size: 1.8rem;">📋 测试须知</h1>
+            <div class="notice-box">
+                <div class="notice-title">请仔细阅读以下须知：</div>
+                <ul class="notice-list">
+                    <li>诚实独立作答，回答“本来的我”，而非“希望中的我”或“理想中的我”</li>
+                    <li>本测试共93道题，全部完成约需20分钟，请在心态平和、不受打扰的环境中进行</li>
+                    <li>所有题目均为二选一，凭第一反应作答，不要在一道题上思考太久</li>
+                    <li>性格没有好坏之分，每一种性格类型都有其独特的价值和优势</li>
+                    <li>测试结果仅供参考，反映的是你的性格倾向，而非能力或知识</li>
+                </ul>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" id="backToHomeBtn">我还没准备好</button>
+                <button class="btn btn-primary" id="agreeStartBtn">好，我知道惹~</button>
+            </div>
+        </div>
+        <div class="footer"><p>MBTI | 迈尔斯-布里格斯类型指标</p></div>
+    </div>
+
+    <!-- 答题页 -->
+    <div id="quizPage" class="page">
+        <div class="page-content">
+            <div class="progress-area">
+                <div class="progress-text"><span id="currentQuestionNum">第1题</span><span id="totalCount">/ 93题</span></div>
+                <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+            </div>
+            <div class="question-text" id="questionText">加载中...</div>
+            <div class="options" id="optionsContainer"></div>
+            <div class="nav-buttons">
+                <button class="btn btn-outline" id="prevBtn">上一题</button>
+                <button class="btn btn-primary" id="nextBtn">下一题</button>
+            </div>
+        </div>
+        <div class="footer"><p>请根据你的真实感受选择 | 第 <span id="currentIdx">1</span> / 93 题</p></div>
+    </div>
+
+    <!-- 结果页 -->
+    <div id="resultPage" class="page">
+        <div class="page-content">
+            <div class="result-card" id="resultContent">
+                <h2>🎉 你的MBTI人格类型</h2>
+                <div class="result-type" id="resultType">----</div>
+                <img class="result-image" id="resultImage" src="" alt="人格介绍图片">
+                <div class="result-desc" id="resultDesc">正在加载你的专属人格分析...</div>
+                <button class="btn btn-primary btn-restart" id="restartBtn">重新测试</button>
+            </div>
+        </div>
+        <div class="footer"><p>MBTI人格测试 | 迈尔斯-布里格斯类型指标</p></div>
+    </div>
+</div>
+
+<script src="js/questions.js"></script>
+<script>
+    // 全局变量
+    let userAnswers = new Array(93).fill(null);
+    let currentIndex = 0;
+
+    // 维度归属映射表（基于之前整理的计分规则）
+    // 每个维度下的题目编号（1-based）及其对应的选项倾向（A或B计为哪个类型）
+    // 构建一个快速查找表：对于每一题，根据选项A/B决定增加哪个维度的哪个倾向
+    const dimensionRules = {
+        // E/I 维度：A计E，B计I（题目列表）
+        EI: [4,8,12,14,18,19,22,23,26,27,29,33,34,42,46,48,49,50,51,52,53,54,55,56,57,58,60,61,62,63,65,66,67,68,69,70,71],
+        // S/N 维度：A计S，B计N
+        SN: [3,5,13,15,24,28,30,39,40,41,43,64,81,82,83,84,85,86,87],
+        // T/F 维度：A计T，B计F
+        TF: [6,16,31,36,44,47,88,89,90,91,92,93],
+        // J/P 维度：A计J，B计P
+        JP: [1,2,7,9,10,11,17,20,21,25,32,35,37,38,45,59,72,73,74,75,76,77,78,79,80]
+    };
+
+    function calculateResult() {
+        let scores = { E:0, I:0, S:0, N:0, T:0, F:0, J:0, P:0 };
+        for (let i = 0; i < userAnswers.length; i++) {
+            const answer = userAnswers[i];
+            if (!answer) continue;
+            const qNum = i + 1; // 题号从1开始
+            // EI维度
+            if (dimensionRules.EI.includes(qNum)) {
+                if (answer === 'A') scores.E++; else scores.I++;
+            }
+            // SN维度
+            if (dimensionRules.SN.includes(qNum)) {
+                if (answer === 'A') scores.S++; else scores.N++;
+            }
+            // TF维度
+            if (dimensionRules.TF.includes(qNum)) {
+                if (answer === 'A') scores.T++; else scores.F++;
+            }
+            // JP维度
+            if (dimensionRules.JP.includes(qNum)) {
+                if (answer === 'A') scores.J++; else scores.P++;
+            }
+        }
+        // 确定四个字母，同分时按规则取后者（I/N/F/P）
+        let typeEI = (scores.E >= scores.I) ? 'E' : 'I';
+        if (scores.E === scores.I) typeEI = 'I';
+        let typeSN = (scores.S >= scores.N) ? 'S' : 'N';
+        if (scores.S === scores.N) typeSN = 'N';
+        let typeTF = (scores.T >= scores.F) ? 'T' : 'F';
+        if (scores.T === scores.F) typeTF = 'F';
+        let typeJP = (scores.J >= scores.P) ? 'J' : 'P';
+        if (scores.J === scores.P) typeJP = 'P';
+        return typeEI + typeSN + typeTF + typeJP;
+    }
+
+    // 页面元素
+    const homePage = document.getElementById('homePage');
+    const noticePage = document.getElementById('noticePage');
+    const quizPage = document.getElementById('quizPage');
+    const resultPage = document.getElementById('resultPage');
+    const startBtn = document.getElementById('startBtn');
+    const backToHomeBtn = document.getElementById('backToHomeBtn');
+    const agreeStartBtn = document.getElementById('agreeStartBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const questionTextEl = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const progressFill = document.getElementById('progressFill');
+    const currentIdxSpan = document.getElementById('currentIdx');
+    const currentQuestionNumSpan = document.getElementById('currentQuestionNum');
+
+    function showPage(pageId) {
+        homePage.classList.remove('active');
+        noticePage.classList.remove('active');
+        quizPage.classList.remove('active');
+        resultPage.classList.remove('active');
+        if (pageId === 'home') homePage.classList.add('active');
+        if (pageId === 'notice') noticePage.classList.add('active');
+        if (pageId === 'quiz') quizPage.classList.add('active');
+        if (pageId === 'result') resultPage.classList.add('active');
+    }
+
+    function renderCurrentQuestion() {
+        if (!window.mbtiQuestions || currentIndex >= window.mbtiQuestions.length) return;
+        const q = window.mbtiQuestions[currentIndex];
+        questionTextEl.innerText = q.text;
+        optionsContainer.innerHTML = '';
+        const optA = document.createElement('button');
+        optA.className = 'option-btn';
+        optA.setAttribute('data-value', 'A');
+        optA.innerText = q.optionA;
+        const optB = document.createElement('button');
+        optB.className = 'option-btn';
+        optB.setAttribute('data-value', 'B');
+        optB.innerText = q.optionB;
+        optionsContainer.appendChild(optA);
+        optionsContainer.appendChild(optB);
+        if (userAnswers[currentIndex] === 'A') optA.classList.add('selected');
+        if (userAnswers[currentIndex] === 'B') optB.classList.add('selected');
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const val = btn.getAttribute('data-value');
+                userAnswers[currentIndex] = val;
+                document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+            });
+        });
+        const percent = ((currentIndex + 1) / window.mbtiQuestions.length) * 100;
+        progressFill.style.width = percent + '%';
+        currentIdxSpan.innerText = currentIndex + 1;
+        currentQuestionNumSpan.innerText = `第${currentIndex + 1}题`;
+    }
+
+    function prevQuestion() { if (currentIndex > 0) { currentIndex--; renderCurrentQuestion(); } }
+    function nextQuestion() {
+        if (!userAnswers[currentIndex]) { alert('请先选择一个选项'); return; }
+        if (currentIndex < window.mbtiQuestions.length - 1) { currentIndex++; renderCurrentQuestion(); }
+        else { showResult(); }
+    }
+    function showResult() {
+        const resultType = calculateResult();
+        document.getElementById('resultType').innerText = resultType;
+        document.getElementById('resultImage').src = `image/${resultType}-typies.jpg`;
+        document.getElementById('resultImage').onerror = () => { document.getElementById('resultImage').src = 'image/placeholder.jpg'; };
+        const descMap = {
+            'INTJ':'战略家型——富有想象力和战略思维，一切皆在计划之中。','INTP':'思考者型——对知识有无尽渴求，喜欢分析和构建理论。',
+            'ENTJ':'指挥官型——天生的领导者，善于改进系统与流程。','ENTP':'辩论家型——聪明好奇，喜欢挑战常规。',
+            'INFJ':'提倡者型——安静而神秘，鼓舞人心的理想主义者。','INFP':'调停者型——诗意善良，利他主义。',
+            'ENFJ':'主人公型——富有魅力和鼓舞人心的领导者。','ENFP':'竞选者型——热情、有创造力、爱社交。',
+            'ISTJ':'检查员型——正直、务实、逻辑性强，做事有条不紊。','ISFJ':'守护者型——专注而温暖，默默守护身边的人。',
+            'ESTJ':'管理者型——执行力强，善于管理和监督。','ESFJ':'执政官型——热心、健谈、受欢迎，乐于助人。',
+            'ISTP':'鉴赏家型——大胆而实际，善于动手解决问题。','ISFP':'探险家型——灵活有魅力，时刻准备探索新体验。',
+            'ESTP':'企业家型——聪明、精力充沛，善于把握机会。','ESFP':'表演者型——自发性强、精力充沛且热情。'
+        };
+        document.getElementById('resultDesc').innerHTML = descMap[resultType] || `你是独特的${resultType}类型，拥有独一无二的人格魅力。`;
+        showPage('result');
+    }
+    function resetTest() { userAnswers.fill(null); currentIndex = 0; if(window.mbtiQuestions) renderCurrentQuestion(); showPage('home'); }
+
+    startBtn.addEventListener('click', () => showPage('notice'));
+    backToHomeBtn.addEventListener('click', () => showPage('home'));
+    agreeStartBtn.addEventListener('click', () => {
+        if (!window.mbtiQuestions || window.mbtiQuestions.length !== 93) { alert('题目加载失败，请检查 js/questions.js 文件'); return; }
+        currentIndex = 0; renderCurrentQuestion(); showPage('quiz');
+    });
+    prevBtn.addEventListener('click', prevQuestion);
+    nextBtn.addEventListener('click', nextQuestion);
+    restartBtn.addEventListener('click', resetTest);
+</script>
+</body>
+</html>

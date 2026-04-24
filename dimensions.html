@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI四维完全指南 | 迈尔斯-布里格斯类型指标</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7ff 0%, #ffffff 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* 顶部导航 */
+        .top-bar {
+            background: white;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        .nav-links a.active {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 4px;
+        }
+
+        /* 主内容区 */
+        .main-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+        }
+        .page-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 维度卡片 */
+        .dimension-card {
+            background: white;
+            border-radius: 32px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid #eee;
+            transition: transform 0.2s, box-shadow 0.2s;
+            scroll-margin-top: 100px;
+        }
+        .dimension-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(102,126,234,0.1);
+        }
+        .dimension-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .dimension-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .dimension-subtitle {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .dimension-pair {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 24px 0;
+        }
+        .dimension-side {
+            flex: 1;
+            min-width: 200px;
+            background: #f8f9ff;
+            border-radius: 24px;
+            padding: 20px;
+        }
+        .dimension-side h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+        .dimension-side p {
+            line-height: 1.7;
+            color: #555;
+        }
+        .dimension-side .examples {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 12px;
+        }
+        .key-point {
+            background: linear-gradient(135deg, #667eea08, #764ba208);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .key-point p {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 32px;
+            color: #999;
+            font-size: 0.8rem;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .dimension-pair {
+                flex-direction: column;
+            }
+            .dimension-title {
+                font-size: 1.4rem;
+            }
+            .main-content {
+                padding: 32px 20px 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🧠 MBTI 人格测试</a>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="dimensions.html" class="active">四维详解</a>
+                <a href="encyclopedia.html">人格百科</a>
+                <a href="relationship.html">情感相处</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1>📐 MBTI 四维完全指南</h1>
+            <p>理解 E/I、S/N、T/F、J/P，是读懂十六型人格的第一步</p>
+        </div>
+
+        <!-- 维度一：E/I -->
+        <div id="E-I" class="dimension-card">
+            <div class="dimension-title">
+                <span>🌍 维度一：外向 (E) — 内向 (I)</span>
+                <span class="dimension-badge" style="background:#667eea20; color:#667eea;">能量来源</span>
+            </div>
+            <div class="dimension-subtitle">核心区别在于心理能量的主要来源与恢复路径，而非「话多话少」或社交能力。</div>
+            <div class="dimension-pair">
+                <div class="dimension-side">
+                    <h3 style="color:#667eea;">外向 (Extraversion)</h3>
+                    <p>在与他人互动、对外表达、参与群体活动中获得兴奋感与动力；长时间独处可能感到沉闷。讨论中常说「边想边说」，通过外部反馈调整思路。</p>
+                    <div class="examples">👥 典型表现：喜欢聚会、乐于分享、精力充沛于人群中</div>
+                </div>
+                <div class="dimension-side">
+                    <h3 style="color:#764ba2;">内向 (Introversion)</h3>
+                    <p>在独处、深度思考或小范围深度交流中获得恢复；持续社交后需要「关机充电」。倾向于先内化再表达，重视思考的完整性。</p>
+                    <div class="examples">📖 典型表现：喜欢独处、深思熟虑、小圈子深度交流</div>
+                </div>
+            </div>
+            <div class="key-point">
+                <p>💡 关键提示：内外向不是「社恐」与「社牛」的标签，而是你如何恢复精力。外向者从人群中获得能量，内向者在独处中恢复精力。绝大多数人其实介于两者之间，只是更倾向于某一端。</p>
+            </div>
+        </div>
+
+        <!-- 维度二：S/N -->
+        <div id="S-N" class="dimension-card">
+            <div class="dimension-title">
+                <span>🔍 维度二：感觉 (S) — 直觉 (N)</span>
+                <span class="dimension-badge" style="background:#4facfe20; color:#4facfe;">信息获取</span>
+            </div>
+            <div class="dimension-subtitle">你如何接收和处理信息：关注具体事实与细节，还是倾向抽象概念与可能性？</div>
+            <div class="dimension-pair">
+                <div class="dimension-side">
+                    <h3 style="color:#4facfe;">感觉 (Sensing)</h3>
+                    <p>更信任可验证的事实、细节、经验与当下现实。擅长执行标准流程、发现具体偏差、落实可重复的结果。提问方式常为「具体是什么、数据如何、以前怎么做的」。</p>
+                    <div class="examples">📊 典型表现：注重细节、相信经验、关注「是什么」</div>
+                </div>
+                <div class="dimension-side">
+                    <h3 style="color:#f093fb;">直觉 (Intuition)</h3>
+                    <p>更关注模式、关联、可能性与整体图景。擅长联想、预见趋势、提出新框架。提问方式常为「这意味着什么、如果……会怎样、长期方向是什么」。</p>
+                    <div class="examples">✨ 典型表现：富有想象力、关注「可能是什么」</div>
+                </div>
+            </div>
+            <div class="key-point">
+                <p>💡 关键提示：感觉型善于处理具体事务，直觉型善于发现新可能。两种方式没有优劣之分，团队中两者互补往往效果最佳。</p>
+            </div>
+        </div>
+
+        <!-- 维度三：T/F -->
+        <div id="T-F" class="dimension-card">
+            <div class="dimension-title">
+                <span>⚖️ 维度三：思维 (T) — 情感 (F)</span>
+                <span class="dimension-badge" style="background:#f5a62320; color:#f5a623;">决策方式</span>
+            </div>
+            <div class="dimension-subtitle">你做决定时的依据：以逻辑和客观分析为主，还是以价值观和人际和谐为优先？</div>
+            <div class="dimension-pair">
+                <div class="dimension-side">
+                    <h3 style="color:#f5a623;">思维 (Thinking)</h3>
+                    <p>决策时优先衡量逻辑一致性、因果、公平原则与系统效率。容易在讨论中聚焦「道理是否站得住」，有时被误解为冷漠，实则强调客观标准。</p>
+                    <div class="examples">📐 典型表现：重视逻辑、客观公正、追求真理</div>
+                </div>
+                <div class="dimension-side">
+                    <h3 style="color:#e94e77;">情感 (Feeling)</h3>
+                    <p>决策时优先衡量价值观、人际影响与和谐。重视「对相关人员是否尊重、是否照顾感受」，不等于不理性，而是把人的因素纳入核心权重。</p>
+                    <div class="examples">💖 典型表现：善解人意、重视和谐、以人为本</div>
+                </div>
+            </div>
+            <div class="key-point">
+                <p>💡 关键提示：思维型倾向于「对事不对人」，情感型更注重「对人的影响」。两者都是理性的决策方式，只是权重不同。健康的团队需要两种视角。</p>
+            </div>
+        </div>
+
+        <!-- 维度四：J/P -->
+        <div id="J-P" class="dimension-card">
+            <div class="dimension-title">
+                <span>📅 维度四：判断 (J) — 知觉 (P)</span>
+                <span class="dimension-badge" style="background:#2d8f6e20; color:#2d8f6e;">生活态度</span>
+            </div>
+            <div class="dimension-subtitle">你应对外部世界的方式：偏好计划和秩序，还是保持灵活和开放选项？</div>
+            <div class="dimension-pair">
+                <div class="dimension-side">
+                    <h3 style="color:#2d8f6e;">判断 (Judging)</h3>
+                    <p>倾向对外部世界尽早计划、决策与收尾，喜欢清晰结构与可预期节奏；在信息仍变动时可能感到焦虑。享受「完成」的感觉。</p>
+                    <div class="examples">📋 典型表现：喜欢计划、有条理、享受确定性</div>
+                </div>
+                <div class="dimension-side">
+                    <h3 style="color:#d4a11e;">知觉 (Perceiving)</h3>
+                    <p>倾向保留弹性、开放新信息、推迟闭合选项，适应变化能力强；在过度结构化环境中可能感到束缚。享受「探索」的过程。</p>
+                    <div class="examples">🌈 典型表现：灵活随性、适应变化、享受可能性</div>
+                </div>
+            </div>
+            <div class="key-point">
+                <p>💡 关键提示：这与「是否自律」不是一一对应——许多 P 型在截止日期前效率极高，许多 J 型也会在重大决策前反复修订计划。它描述的是你偏好的生活节奏。</p>
+            </div>
+        </div>
+
+        <div style="background: #f0f4ff; border-radius: 28px; padding: 32px; margin-top: 40px; text-align: center;">
+            <h3 style="margin-bottom: 12px;">🧩 如何把四维与十六型结果连起来读？</h3>
+            <p style="color: #555; line-height: 1.7; margin-bottom: 16px;">四个字母组合成 16 种类型，例如 <strong>INTJ</strong> = 内向(I) + 直觉(N) + 思维(T) + 判断(J)。<br>建议先看 E/I 与 S/N（能量与信息），再看 T/F 与 J/P（决策与生活组织），最后到具体类型页了解典型优势、压力点与职业线索。</p>
+            <a href="index.html#encyArea" style="display: inline-block; margin-top: 8px; padding: 12px 28px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; text-decoration: none; border-radius: 40px; font-weight: 500;">→ 浏览 16 种人格类型</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>基于迈尔斯-布里格斯类型指标 (MBTI) | 四维完全指南</p>
+        <p style="margin-top: 8px;">MBTI 测量的是偏好倾向，不是能力高低，没有好坏之分。</p>
+    </div>
+</body>
+</html>
